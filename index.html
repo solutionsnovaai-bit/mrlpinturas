@@ -446,7 +446,11 @@ class Component extends DCLogic {
 
     try {
       if (typeof window !== 'undefined' && window.Lenis) {
-        this.lenis = new window.Lenis({ duration: 1.1, smoothWheel: !this.reducedMotion });
+        this.lenis = new window.Lenis({
+  duration: 1.1,
+  smoothWheel: !this.reducedMotion,
+  autoResize: true
+});
         const raf = (time) => {
           if (this.lenis) this.lenis.raf(time);
           this._rafId = requestAnimationFrame(raf);
