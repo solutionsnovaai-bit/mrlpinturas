@@ -409,7 +409,20 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._onResize);
 
     this._t1 = setTimeout(() => this.setState({ loaderFading: true }), 1800);
-    this._t2 = setTimeout(() => this.setState({ loading: false }), 2400);
+    this._t2 = setTimeout(() => {
+  this.setState({ loading: false }, () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (this.lenis) {
+          this.lenis.resize();
+          this.lenis.start();
+        }
+
+        window.dispatchEvent(new Event('resize'));
+      });
+    });
+  });
+}, 2400);
 
     this._observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
